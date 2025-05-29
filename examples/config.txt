@@ -1,0 +1,6 @@
+N = 10
+initial-state = ../examples/Data/data_N10.csv
+mask = ../examples/Data/mask_N10.csv
+tol = 0.001
+max-iter = 500
+output = 2
