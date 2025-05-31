@@ -53,8 +53,8 @@ This project uses **CMake** for configuration and supports **Google Test** for u
 
 ```bash
 mkdir build
-cd build -DCMAKE_BUILD_TYPE=Release
-cmake .. 
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release 
 cmake --build . -j4
 ```
 
