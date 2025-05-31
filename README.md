@@ -45,7 +45,7 @@ This project uses **CMake** for configuration and supports **Google Test** for u
 * C++17 compiler (e.g., `g++`, `clang++`)
 * CMake ≥ 3.12
 * [Boost.Program\_options](https://www.boost.org/doc/libs/release/doc/html/program_options.html)
-* [HDF5 C++ API](https://support.hdfgroup.org/HDF5/)
+* [HDF5 C++ API](https://www.hdfgroup.org/)
 * [Google Test](https://github.com/google/googletest)
 * OpenMP
 
