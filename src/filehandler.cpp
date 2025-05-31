@@ -1,4 +1,5 @@
 #include "filehandler.hpp"
+
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -6,10 +7,12 @@
 
 namespace laplace {
 
-FileHandler::Array2D FileHandler::read(const std::string& filename, char delimiter) {
+FileHandler::Array2D FileHandler::read(const std::string& filename,
+                                       char delimiter) {
     std::ifstream infile(filename);
     if (!infile.is_open()) {
-        throw std::runtime_error("Could not open file for reading: " + filename);
+        throw std::runtime_error("Could not open file for reading: " +
+                                 filename);
     }
 
     std::vector<std::vector<float>> temp_data;
@@ -45,21 +48,24 @@ FileHandler::Array2D FileHandler::read(const std::string& filename, char delimit
     }
 
     if (rows != cols) {
-        throw std::runtime_error("Matrix is not square: " + std::to_string(rows) + " x " + std::to_string(cols));
+        throw std::runtime_error(
+            "Matrix is not square: " + std::to_string(rows) + " x " +
+            std::to_string(cols));
     }
 
     Array2D array(boost::extents[rows][cols]);
     for (size_t i = 0; i < rows; ++i)
-        for (size_t j = 0; j < cols; ++j)
-            array[i][j] = temp_data[i][j];
+        for (size_t j = 0; j < cols; ++j) array[i][j] = temp_data[i][j];
 
     return array;
 }
 
-void FileHandler::write(const std::string& filename, const Array2D& array, char delimiter) {
+void FileHandler::write(const std::string& filename, const Array2D& array,
+                        char delimiter) {
     std::ofstream outfile(filename);
     if (!outfile.is_open()) {
-        throw std::runtime_error("Could not open file for writing: " + filename);
+        throw std::runtime_error("Could not open file for writing: " +
+                                 filename);
     }
 
     size_t rows = array.shape()[0];
@@ -76,4 +82,4 @@ void FileHandler::write(const std::string& filename, const Array2D& array, char 
     }
 }
 
-} // namespace laplace
+}  // namespace laplace

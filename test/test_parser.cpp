@@ -1,15 +1,17 @@
 #include <gtest/gtest.h>
-#include "parser.hpp"
-#include "exceptions.hpp"
-#include <vector>
-#include <string>
+
+#include <cstdio>  // for std::remove
 #include <fstream>
-#include <cstdio> // for std::remove
+#include <string>
+#include <vector>
+
+#include "exceptions.hpp"
+#include "parser.hpp"
 
 using namespace laplace;
 
 class ParserTest : public ::testing::Test {
-protected:
+   protected:
     std::vector<std::string> args;
     std::vector<char*> argv;
 
@@ -37,19 +39,12 @@ TEST_F(ParserTest, MissingRequiredArgsThrows) {
     SetArgs({"program", "--N", "100"});
     Parser parser = CreateParser();
 
-    EXPECT_THROW({
-        parser.parse();
-    }, ParserException);
+    EXPECT_THROW({ parser.parse(); }, ParserException);
 }
 
 TEST_F(ParserTest, ParsesRequiredArguments) {
-    SetArgs({
-        "program",
-        "--N", "128",
-        "--initial-state", "init.txt",
-        "--mask", "mask.txt",
-        "--result-path", "results.txt"
-    });
+    SetArgs({"program", "--N", "128", "--initial-state", "init.txt", "--mask",
+             "mask.txt", "--result-path", "results.txt"});
     Parser parser = CreateParser();
 
     ASSERT_TRUE(parser.parse());
@@ -65,16 +60,9 @@ TEST_F(ParserTest, ParsesRequiredArguments) {
 }
 
 TEST_F(ParserTest, ParsesAllArguments) {
-    SetArgs({
-        "program",
-        "--N", "64",
-        "--initial-state", "state.dat",
-        "--result-path", "result.dat",
-        "--mask", "mask.dat",
-        "--tol", "0.0005",
-        "--max-iter", "2000",
-        "--output", "2"
-    });
+    SetArgs({"program", "--N", "64", "--initial-state", "state.dat",
+             "--result-path", "result.dat", "--mask", "mask.dat", "--tol",
+             "0.0005", "--max-iter", "2000", "--output", "2"});
     Parser parser = CreateParser();
 
     ASSERT_TRUE(parser.parse());
@@ -104,10 +92,7 @@ TEST_F(ParserTest, ParsesFromConfigFile) {
     config << "output=0\n";
     config.close();
 
-    SetArgs({
-        "program",
-        "--config", config_filename
-    });
+    SetArgs({"program", "--config", config_filename});
     Parser parser = CreateParser();
 
     ASSERT_TRUE(parser.parse());
@@ -121,17 +106,12 @@ TEST_F(ParserTest, ParsesFromConfigFile) {
     EXPECT_EQ(params.max_iter, 3000);
     EXPECT_EQ(params.output, 0);
 
-    std::remove(config_filename.c_str()); // cleanup
+    std::remove(config_filename.c_str());  // cleanup
 }
 
 TEST_F(ParserTest, ConfigFileMissingThrows) {
-    SetArgs({
-        "program",
-        "--config", "nonexistent.cfg"
-    });
+    SetArgs({"program", "--config", "nonexistent.cfg"});
 
     Parser parser = CreateParser();
-    EXPECT_THROW({
-        parser.parse();
-    }, ParserException);
+    EXPECT_THROW({ parser.parse(); }, ParserException);
 }

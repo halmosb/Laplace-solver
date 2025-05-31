@@ -7,11 +7,11 @@
 namespace laplace {
 
 class ParserException : public std::runtime_error {
-public:
+   public:
     explicit ParserException(const std::string& message)
         : std::runtime_error(message) {}
 };
 
-} // namespace laplace
+}  // namespace laplace
 
-#endif // _EXCEPTIONS_HPP_
+#endif  // _EXCEPTIONS_HPP_

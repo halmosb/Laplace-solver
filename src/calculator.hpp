@@ -7,15 +7,16 @@
 namespace laplace {
 
 class Calculator {
-public:
+   public:
     using Array2D = boost::multi_array<float, 2>;
 
     Calculator(const ParameterList& plist);
     void jacobi();
-private:
+
+   private:
     ParameterList d_plist;
 };
 
-} // namespace laplace
+}  // namespace laplace
 
-#endif // _CALCULATOR_HPP_
+#endif  // _CALCULATOR_HPP_

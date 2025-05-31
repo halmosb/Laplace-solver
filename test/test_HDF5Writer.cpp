@@ -1,14 +1,16 @@
-#include <gtest/gtest.h>
-#include "HDF5Writer.hpp"
 #include <H5Cpp.h>
+#include <gtest/gtest.h>
+
 #include <boost/multi_array.hpp>
 #include <filesystem>
+
+#include "HDF5Writer.hpp"
 
 using namespace laplace;
 namespace fs = std::filesystem;
 
 class HDF5WriterTest : public ::testing::Test {
-protected:
+   protected:
     std::string testFile = "test_output.h5";
 
     void TearDown() override {
@@ -17,14 +19,14 @@ protected:
 
     ParameterList createTestParameters() {
         return {
-            5,                 // N
-            0.001f,            // tol
-            50,               // max_iter
-            "state.h5",       // initial_state_path
-            "mask.h5",        // mask_path
-            1,                // output
-            "config.yaml",    // config_path
-            "results.csv"     // result_path
+            5,              // N
+            0.001f,         // tol
+            50,             // max_iter
+            "state.h5",     // initial_state_path
+            "mask.h5",      // mask_path
+            1,              // output
+            "config.yaml",  // config_path
+            "results.csv"   // result_path
         };
     }
 
@@ -36,7 +38,8 @@ protected:
         return result;
     }
 
-    std::string readStringAttr(const H5::Group& group, const std::string& name) {
+    std::string readStringAttr(const H5::Group& group,
+                               const std::string& name) {
         H5::StrType strType(H5::PredType::C_S1, H5T_VARIABLE);
         H5::Attribute attr = group.openAttribute(name);
         std::string val;
@@ -60,7 +63,8 @@ TEST_F(HDF5WriterTest, WritesParametersCorrectly) {
     EXPECT_EQ(N, params.N);
 
     EXPECT_EQ(readStringAttr(group, "config_path"), params.config_path);
-    EXPECT_EQ(readStringAttr(group, "initial_state_path"), params.initial_state_path);
+    EXPECT_EQ(readStringAttr(group, "initial_state_path"),
+              params.initial_state_path);
 }
 
 TEST_F(HDF5WriterTest, WritesResultDatasetCorrectly) {
@@ -107,9 +111,9 @@ TEST_F(HDF5WriterTest, OverwritesFileOnCreation) {
     }
 
     {
-        HDF5Writer writer(testFile); // Should overwrite
+        HDF5Writer writer(testFile);  // Should overwrite
         ParameterList params = createTestParameters();
-        params.N = 99; // Different parameter
+        params.N = 99;  // Different parameter
         writer.writeParameters(params);
         writer.close();
     }

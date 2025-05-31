@@ -7,13 +7,14 @@
 namespace laplace {
 
 class FileHandler {
-public:
+   public:
     using Array2D = boost::multi_array<float, 2>;
 
     static Array2D read(const std::string& filename, char delimiter = ' ');
-    static void write(const std::string& filename, const Array2D& array, char delimiter = ' ');
+    static void write(const std::string& filename, const Array2D& array,
+                      char delimiter = ' ');
 };
 
-} // namespace laplace
+}  // namespace laplace
 
-#endif // FILE_HANDLER_HPP
+#endif  // FILE_HANDLER_HPP

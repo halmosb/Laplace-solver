@@ -1,12 +1,14 @@
-#include "filehandler.hpp"
 #include <gtest/gtest.h>
-#include <fstream>
+
 #include <cstdio>
+#include <fstream>
+
+#include "filehandler.hpp"
 
 using namespace laplace;
 
 class FileHandlerTest : public ::testing::Test {
-protected:
+   protected:
     std::string test_file = "test_matrix.txt";
 
     void writeToFile(const std::string& content) {
@@ -14,9 +16,7 @@ protected:
         out << content;
     }
 
-    void TearDown() override {
-        std::remove(test_file.c_str());
-    }
+    void TearDown() override { std::remove(test_file.c_str()); }
 };
 
 TEST_F(FileHandlerTest, ValidReadAndWrite) {
