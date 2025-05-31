@@ -1,6 +1,7 @@
 import numpy as np
 import copy
 from functions import *
+import matplotlib.pyplot as plt
 
 def jacobi(data, mask, tol=1e-3, max_iter=1000):
     """
@@ -72,4 +73,3 @@ if __name__ == "__main__":
     if output >= 1:
         print(f"Results saved to file: {result_path}.")
         print("bye")
-
