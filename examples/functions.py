@@ -2,17 +2,17 @@ import numpy as np
 import argparse
 import configparser
 
-def generate_ex1(N, path):
-    data = np.zeros((N, N), dtype=np.float32)
+def generate_ex1(N, M, path):
+    data = np.zeros((N, M), dtype=np.float32)
     data[:, 0] = 1
-    np.savetxt(f"{path}/data_N{N}.csv", data, delimiter=" ")
+    np.savetxt(f"{path}/N{N}_M{M}_data.csv", data, delimiter=" ")
 
     mask = np.zeros_like(data)
     mask[:, 0] = 1
     mask[:, -1] = 1
     mask[0, :] = 1
     mask[-1, :] = 1
-    np.savetxt(f"{path}/mask_N{N}.csv", mask, delimiter=" ")
+    np.savetxt(f"{path}/N{N}_M{M}_mask.csv", mask, delimiter=" ")
 
 def parse():
     # First, parse just the --config argument to load defaults

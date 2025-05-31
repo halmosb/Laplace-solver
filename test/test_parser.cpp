@@ -43,14 +43,15 @@ TEST_F(ParserTest, MissingRequiredArgsThrows) {
 }
 
 TEST_F(ParserTest, ParsesRequiredArguments) {
-    SetArgs({"program", "--N", "128", "--initial-state", "init.txt", "--mask",
-             "mask.txt", "--result-path", "results.txt"});
+    SetArgs({"program", "--N", "128", "--M", "3", "--initial-state", "init.txt",
+             "--mask", "mask.txt", "--result-path", "results.txt"});
     Parser parser = CreateParser();
 
     ASSERT_TRUE(parser.parse());
 
     const auto& params = parser.get_parameter_list();
     EXPECT_EQ(params.N, 128);
+    EXPECT_EQ(params.M, 3);
     EXPECT_EQ(params.initial_state_path, "init.txt");
     EXPECT_EQ(params.mask_path, "mask.txt");
     EXPECT_EQ(params.result_path, "results.txt");
@@ -60,15 +61,16 @@ TEST_F(ParserTest, ParsesRequiredArguments) {
 }
 
 TEST_F(ParserTest, ParsesAllArguments) {
-    SetArgs({"program", "--N", "64", "--initial-state", "state.dat",
-             "--result-path", "result.dat", "--mask", "mask.dat", "--tol",
-             "0.0005", "--max-iter", "2000", "--output", "2"});
+    SetArgs({"program", "--N", "64", "--M", "12", "--initial-state",
+             "state.dat", "--result-path", "result.dat", "--mask", "mask.dat",
+             "--tol", "0.0005", "--max-iter", "2000", "--output", "2"});
     Parser parser = CreateParser();
 
     ASSERT_TRUE(parser.parse());
 
     const auto& params = parser.get_parameter_list();
     EXPECT_EQ(params.N, 64);
+    EXPECT_EQ(params.M, 12);
     EXPECT_EQ(params.initial_state_path, "state.dat");
     EXPECT_EQ(params.mask_path, "mask.dat");
     EXPECT_EQ(params.result_path, "result.dat");
@@ -84,6 +86,7 @@ TEST_F(ParserTest, ParsesFromConfigFile) {
     ASSERT_TRUE(config.is_open());
 
     config << "N=256\n";
+    config << "M=1024\n";
     config << "initial-state=init_from_config.txt\n";
     config << "mask=mask_from_config.txt\n";
     config << "result-path=result_from_config.txt\n";
@@ -99,6 +102,7 @@ TEST_F(ParserTest, ParsesFromConfigFile) {
 
     const auto& params = parser.get_parameter_list();
     EXPECT_EQ(params.N, 256);
+    EXPECT_EQ(params.M, 1024);
     EXPECT_EQ(params.initial_state_path, "init_from_config.txt");
     EXPECT_EQ(params.mask_path, "mask_from_config.txt");
     EXPECT_EQ(params.result_path, "result_from_config.txt");

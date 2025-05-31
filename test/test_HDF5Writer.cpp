@@ -20,6 +20,7 @@ class HDF5WriterTest : public ::testing::Test {
     ParameterList createTestParameters() {
         return {
             5,              // N
+            5,              // M
             0.001f,         // tol
             50,             // max_iter
             "state.h5",     // initial_state_path

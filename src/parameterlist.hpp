@@ -7,6 +7,7 @@ namespace laplace {
 
 struct ParameterList {
     int N;
+    int M;
     float tol;
     int max_iter;
     std::string initial_state_path;

@@ -18,7 +18,8 @@ Parser::Parser(int argc, char** argv)
         "Path to the config file");
 
     system_options.add_options()("N", po::value<int>(&d_plist.N)->required(),
-                                 "Size of the grid")(
+                                 "Width of the grid")(
+        "M", po::value<int>(&d_plist.M)->required(), "Height of the grid")(
         "initial-state",
         po::value<std::string>(&d_plist.initial_state_path)->required(),
         "Path to the initial state file")(

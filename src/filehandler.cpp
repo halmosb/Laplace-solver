@@ -1,14 +1,17 @@
 #include "filehandler.hpp"
 
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace laplace {
 
 FileHandler::Array2D FileHandler::read(const std::string& filename,
-                                       char delimiter) {
+                                       char delimiter,
+                                       const ParameterList& plist) {
     std::ifstream infile(filename);
     if (!infile.is_open()) {
         throw std::runtime_error("Could not open file for reading: " +
@@ -42,15 +45,15 @@ FileHandler::Array2D FileHandler::read(const std::string& filename,
 
     size_t cols = temp_data[0].size();
     for (const auto& row : temp_data) {
-        if (row.size() != cols) {
-            throw std::runtime_error("Inconsistent row lengths in file.");
+        if (row.size() != plist.M) {
+            throw std::runtime_error("One of the rows has incorrect length: " +
+                                     std::to_string(row.size()) + " and " +
+                                     std::to_string(plist.N));
         }
     }
 
-    if (rows != cols) {
-        throw std::runtime_error(
-            "Matrix is not square: " + std::to_string(rows) + " x " +
-            std::to_string(cols));
+    if (plist.N != rows) {
+        throw std::runtime_error("Incorrect number of rows.");
     }
 
     Array2D array(boost::extents[rows][cols]);

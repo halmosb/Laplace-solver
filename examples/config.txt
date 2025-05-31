@@ -1,6 +1,7 @@
 N = 10
-initial-state = ../examples/Data/data_N10.csv
-mask = ../examples/Data/mask_N10.csv
+M = 15
+initial-state = ../examples/Data/N10_M15_data.csv
+mask = ../examples/Data/N10_M15_mask.csv
 tol = 0.001
 max-iter = 500
 output = 2
