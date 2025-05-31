@@ -53,7 +53,7 @@ void Utilities::save_print_results(const ParameterList& plist,
     }
 
     if (plist.output >= 1) {
-        std::cout << "Results saved to file: " << plist.result_path << "."
+        std::cout << "Results saved to file: " << plist.result_path << ", using " << num_of_iterations << " iterations."
                   << std::endl
                   << "bye" << std::endl;
     }
