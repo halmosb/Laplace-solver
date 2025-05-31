@@ -171,12 +171,16 @@ Or individually:
 
 ```
 .
-├── include/           # Header files
 ├── src/               # Source code
-├── tests/             # Unit tests (Google Test)
-├── data/              # Sample input files
+├── test/              # Unit tests (Google Test)
+├── examples           # Sample input files and example jupyter notebooks
 ├── build/             # CMake build output
-└── CMakeLists.txt     # Build configuration
+├── build/             # CMake build output
+├── .clang-format      # Defines the style for the clang-format
+├── .gitignore         # Feiles to ignore in git
+├── CMakeLists.txt     # Build configuration
+├── LICENSE            # Describes the license
+└── README.md          # Desrcribes the project
 ```
 
 ---
