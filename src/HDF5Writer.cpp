@@ -9,6 +9,7 @@ HDF5Writer::HDF5Writer(const std::string& filename)
 
 void HDF5Writer::writeParameters(const ParameterList& params) {
     writeAttribute("N", params.N);
+    writeAttribute("M", params.M);
     writeAttribute("tol", params.tol);
     writeAttribute("max_iter", params.max_iter);
     writeAttribute("initial_state_path", params.initial_state_path);

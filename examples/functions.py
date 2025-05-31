@@ -1,6 +1,8 @@
 import numpy as np
 import argparse
 import configparser
+import os
+import h5py
 
 def generate_ex1(N, M, path):
     data = np.zeros((N, M), dtype=np.float32)
@@ -46,3 +48,36 @@ def parse():
 
     args = parser.parse_args(remaining_argv)
     return args
+
+
+def load_array(filename):
+    """Load array from an h5 or csv file."""
+    ext = os.path.splitext(filename)[1].lower()
+    if ext == ".h5":
+        with h5py.File(filename, "r") as f:
+            return f["result"][:]
+    elif ext == ".csv":
+        return np.loadtxt(filename, delimiter=" ")
+    else:
+        raise ValueError(f"Unsupported file extension: {ext}")
+
+def compare_arrays(file_list, reference_file, rtol=1e-5, atol=1e-8):
+    """Compare arrays in file_list to the reference file using np.allclose."""
+    reference_array = load_array(reference_file)
+    all_passed = True
+
+    for fname in file_list:
+        if fname == reference_file:
+            continue  # Skip comparing file to itself
+        try:
+            array = load_array(fname)
+            if np.allclose(array, reference_array, rtol=rtol, atol=atol):
+                print(f"[PASS] {fname} is close to {reference_file}")
+            else:
+                print(f"[FAIL] {fname} is NOT close to {reference_file}")
+                all_passed = False
+        except Exception as e:
+            print(f"[ERROR] Could not compare {fname}: {e}")
+            all_passed = False
+
+    return all_passed
