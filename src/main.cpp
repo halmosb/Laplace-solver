@@ -17,15 +17,16 @@ int main(int argc, char* argv[]) {
     }
     ParameterList args = parser.get_parameter_list();
 
-    #ifdef USE_OPENMP
-        #pragma omp parallel
-        {
-            #pragma omp single
-            std::cout << "OpenMP enabled. Threads: " << omp_get_num_threads() << "\n";
-        }
-    #else
-        std::cout << "OpenMP NOT enabled.\n";
-    #endif
+#ifdef USE_OPENMP
+#pragma omp parallel
+    {
+#pragma omp single
+        std::cout << "OpenMP enabled. Threads: " << omp_get_num_threads()
+                  << "\n";
+    }
+#else
+    std::cout << "OpenMP NOT enabled.\n";
+#endif
 
     if (args.output >= 2) {
         std::cout << "Laplace equation solver" << std::endl

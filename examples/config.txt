@@ -1,7 +1,7 @@
-N = 3000
-M = 6500
-initial-state = ../examples/Test-Data/N3000_M6500_data.csv
-mask = ../examples/Test-Data/N3000_M6500_mask.csv
+N = 10
+M = 15
+initial-state = ../examples/Data/N10_M15_data.csv
+mask = ../examples/Data/N10_M15_mask.csv
 tol = 0.001
 max-iter = 500
 output = 1

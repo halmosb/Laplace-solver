@@ -27,20 +27,20 @@ void Calculator::jacobi() {
         // Copy the current state to be the previous one
         data_prew = data_curr;
 
-        // Update the values using Jacobi method
-        #pragma omp parallel for collapse(2)
+// Update the values using Jacobi method
+#pragma omp parallel for collapse(2)
         for (int i = 0; i < d_plist.N; i++) {
             for (int j = 0; j < d_plist.M; j++) {
                 if (mask[i][j] == true) {
                     continue;
                 }
-                data_curr[i][j] = 0.25f *
-                                  (data_prew[i + 1][j] + data_prew[i - 1][j] +
-                                   data_prew[i][j + 1] + data_prew[i][j - 1]);
+                data_curr[i][j] =
+                    0.25f * (data_prew[i + 1][j] + data_prew[i - 1][j] +
+                             data_prew[i][j + 1] + data_prew[i][j - 1]);
             }
         }
         float max_error = 0;
-        #pragma omp parallel for reduction(max : max_error) collapse(2)
+#pragma omp parallel for reduction(max : max_error) collapse(2)
         for (int x = 0; x < d_plist.N; ++x) {
             for (int y = 0; y < d_plist.M; ++y) {
                 float error = std::fabs(data_curr[x][y] - data_prew[x][y]);
